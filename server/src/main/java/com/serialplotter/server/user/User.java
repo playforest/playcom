@@ -18,6 +18,38 @@ public class User {
         this.lastlogin = lastlogin;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDate getLastlogin() {
+        return lastlogin;
+    }
+
+    public void setLastlogin(LocalDate lastlogin) {
+        this.lastlogin = lastlogin;
+    }
+
     public User(String name, String email, LocalDate lastlogin) {
         this.name = name;
         this.email = email;
