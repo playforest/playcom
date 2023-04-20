@@ -18,6 +18,12 @@ public class User {
         this.lastlogin = lastlogin;
     }
 
+    public User(String name, String email, LocalDate lastlogin) {
+        this.name = name;
+        this.email = email;
+        this.lastlogin = lastlogin;
+    }
+
     public Long getId() {
         return id;
     }
@@ -50,9 +56,13 @@ public class User {
         this.lastlogin = lastlogin;
     }
 
-    public User(String name, String email, LocalDate lastlogin) {
-        this.name = name;
-        this.email = email;
-        this.lastlogin = lastlogin;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", lastlogin=" + lastlogin +
+                '}';
     }
 }
