@@ -7,21 +7,24 @@ public class User {
     private String name;
     private String email;
     private LocalDate lastlogin;
+    private Boolean status;
 
     public User() {
     }
 
-    public User(Long id, String name, String email, LocalDate lastlogin) {
+    public User(Long id, String name, String email, LocalDate lastlogin, Boolean stats) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.lastlogin = lastlogin;
+        this.status = stats;
     }
 
-    public User(String name, String email, LocalDate lastlogin) {
+    public User(String name, String email, LocalDate lastlogin, Boolean stats) {
         this.name = name;
         this.email = email;
         this.lastlogin = lastlogin;
+        this.status = stats;
     }
 
     public Long getId() {
@@ -56,6 +59,14 @@ public class User {
         this.lastlogin = lastlogin;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -63,6 +74,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", lastlogin=" + lastlogin +
+                ", status=" + status +
                 '}';
     }
 }
