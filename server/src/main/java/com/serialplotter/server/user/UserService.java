@@ -20,4 +20,9 @@ public class UserService {
     public List<User> getUsers() {
         return userRepository.findAll();
     }
+
+    public List<User> postUser(User user) {
+        userRepository.save(user);
+        return List.of(user);
+    }
 }
