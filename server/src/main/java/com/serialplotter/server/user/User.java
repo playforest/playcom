@@ -22,6 +22,7 @@ public class User {
     private Long id;
     private String name;
     private String email;
+    private String role;
     private LocalDate lastlogin;
     @Transient
     private Long daysSinceLastLogin;
@@ -32,18 +33,20 @@ public class User {
 
     }
 
-    public User(Long id, String name, String email, LocalDate lastlogin, LocalDate createdDate, Boolean status) {
+    public User(Long id, String name, String email, String role,LocalDate lastlogin, LocalDate createdDate, Boolean status) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.role = role;
         this.lastlogin = lastlogin;
         this.createdDate = createdDate;
         this.status = status;
     }
 
-    public User(String name, String email, LocalDate lastlogin, LocalDate createdDate, Boolean status) {
+    public User(String name, String email, String role, LocalDate lastlogin, LocalDate createdDate, Boolean status) {
         this.name = name;
         this.email = email;
+        this.role = role;
         this.lastlogin = lastlogin;
         this.createdDate = createdDate;
         this.status = status;
@@ -71,6 +74,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public LocalDate getCreatedDate() {
@@ -109,6 +120,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
                 ", lastlogin=" + lastlogin +
                 ", daysSinceLastLogin=" + daysSinceLastLogin +
                 ", createdDate=" + createdDate +
