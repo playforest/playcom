@@ -1,30 +1,48 @@
 package com.serialplotter.server.user;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    @SequenceGenerator(
+            name="users_sequence",
+            sequenceName = "users_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "users_sequence"
+    )
     private Long id;
     private String name;
     private String email;
     private LocalDate lastlogin;
+    private LocalDate createdDate;
     private Boolean status;
 
     public User() {
+
     }
 
-    public User(Long id, String name, String email, LocalDate lastlogin, Boolean stats) {
+    public User(Long id, String name, String email, LocalDate lastlogin, LocalDate createdDate, Boolean status) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.lastlogin = lastlogin;
-        this.status = stats;
+        this.createdDate = createdDate;
+        this.status = status;
     }
 
-    public User(String name, String email, LocalDate lastlogin, Boolean stats) {
+    public User(String name, String email, LocalDate lastlogin, LocalDate createdDate, Boolean status) {
         this.name = name;
         this.email = email;
         this.lastlogin = lastlogin;
-        this.status = stats;
+        this.createdDate = createdDate;
+        this.status = status;
     }
 
     public Long getId() {
@@ -51,6 +69,14 @@ public class User {
         this.email = email;
     }
 
+    public LocalDate getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDate createdDate) {
+        this.createdDate = createdDate;
+    }
+
     public LocalDate getLastlogin() {
         return lastlogin;
     }
@@ -74,6 +100,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", lastlogin=" + lastlogin +
+                ", createdDate=" + createdDate +
                 ", status=" + status +
                 '}';
     }
