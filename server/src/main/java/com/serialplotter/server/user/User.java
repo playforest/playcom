@@ -1,8 +1,10 @@
 package com.serialplotter.server.user;
 
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "users")
@@ -21,6 +23,8 @@ public class User {
     private String name;
     private String email;
     private LocalDate lastlogin;
+    @Transient
+    private Long daysSinceLastLogin;
     private LocalDate createdDate;
     private Boolean status;
 
@@ -85,6 +89,12 @@ public class User {
         this.lastlogin = lastlogin;
     }
 
+    public Long getDaysSinceLastLogin() {
+        LocalDate currentDate = LocalDate.now();
+        this.daysSinceLastLogin = ChronoUnit.DAYS.between(this.lastlogin, currentDate);
+        return daysSinceLastLogin;
+    }
+
     public Boolean getStatus() {
         return status;
     }
@@ -100,8 +110,11 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", lastlogin=" + lastlogin +
+                ", daysSinceLastLogin=" + daysSinceLastLogin +
                 ", createdDate=" + createdDate +
                 ", status=" + status +
                 '}';
     }
+
+
 }
