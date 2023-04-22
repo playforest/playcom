@@ -33,7 +33,8 @@ public class User {
 
     }
 
-    public User(Long id, String name, String email, String role,LocalDate lastlogin, LocalDate createdDate, Boolean status) {
+    public User(Long id, String name, String email, String role,
+                LocalDate lastlogin, LocalDate createdDate, Boolean status) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -43,7 +44,8 @@ public class User {
         this.status = status;
     }
 
-    public User(String name, String email, String role, LocalDate lastlogin, LocalDate createdDate, Boolean status) {
+    public User(String name, String email, String role, LocalDate lastlogin,
+                LocalDate createdDate, Boolean status) {
         this.name = name;
         this.email = email;
         this.role = role;

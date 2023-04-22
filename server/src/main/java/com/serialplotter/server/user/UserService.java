@@ -3,9 +3,8 @@ package com.serialplotter.server.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -21,8 +20,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public List<User> postUser(User user) {
+    public void addNewUser(User user) {
+        Optional<User> userByEmail = userRepository.findUserByEmail(user.getEmail());
+
+        if (userByEmail.isPresent()) {
+            throw new IllegalStateException("Email already exists");
+        }
+
         userRepository.save(user);
-        return List.of(user);
     }
 }
