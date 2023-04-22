@@ -31,6 +31,17 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUser(Long userId) {
+        Optional<User> userOptional = userRepository.findUserById(userId);
+
+        if (userOptional.isPresent()){
+            User user = userOptional.get();
+            return user;
+        } else {
+            throw new IllegalArgumentException("User ID [" + userId + "] does not exist");
+        }
+    }
+
     public void insertUser(User user) {
         Optional<User> userByEmail = userRepository.findUserByEmail(user.getEmail());
 
@@ -42,7 +53,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUser(Long id, User updatedUser) {
+    public void updateUser(Long userId, User updatedUser) {
         /*
          TODO:
           - validation for case where user ID is passed with an
@@ -51,7 +62,7 @@ public class UserService {
           - research cleaner way of handling validation
           - check for already existing username
         */
-        Optional<User> userOptional = userRepository.findUserById(id);
+        Optional<User> userOptional = userRepository.findUserById(userId);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
@@ -68,16 +79,16 @@ public class UserService {
 
             userRepository.save(user);
         } else {
-            throw new IllegalArgumentException("User ID [" + id + "] does not exist");
+            throw new IllegalArgumentException("User ID [" + userId + "] does not exist");
         }
     }
 
     @Transactional
-    public void partialUpdateUser(Long id, Map<String, Object> updates) {
-        Optional<User> userOptional = userRepository.findUserById(id);
+    public void partialUpdateUser(Long userId, Map<String, Object> updates) {
+        Optional<User> userOptional = userRepository.findUserById(userId);
 
         if(userOptional.isEmpty()) {
-            throw new IllegalArgumentException("User ID [" + id + "] does not exist");
+            throw new IllegalArgumentException("User ID [" + userId + "] does not exist");
         } else {
             User user = userOptional.get();
 
@@ -92,17 +103,17 @@ public class UserService {
         }
     }
 
-    public void removeUser(Long id) {
-        boolean userExists = userRepository.existsById(id);
+    public void removeUser(Long userId) {
+        boolean userExists = userRepository.existsById(userId);
 
         if (!userExists) {
-            throw new IllegalArgumentException("User ID [" + id + "] does not exist");
+            throw new IllegalArgumentException("User ID [" + userId + "] does not exist");
         }
         /*
         TODO:
         - change function from deleting user from db to changing isDeleted field to True
          */
 
-        userRepository.deleteById(id);
+        userRepository.deleteById(userId);
     }
 }

@@ -22,6 +22,10 @@ public class UserController {
         return userService.getUsers();
     }
 
+    @GetMapping("/{userId}")
+    public User getUser(@PathVariable Long userId) {
+        return userService.getUser(userId);
+    }
     @PostMapping()
     public User addNewUser(@RequestBody User user) {
         userService.insertUser(user);
