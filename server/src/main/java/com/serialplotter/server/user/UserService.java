@@ -40,9 +40,9 @@ public class UserService {
             already existing email address
           -
         */
-        Optional<User> userById = userRepository.findUserById(id);
+        boolean userExists = userRepository.existsById(id);
 
-        if (userById.isEmpty()) {
+        if (!userExists) {
             throw new IllegalArgumentException("User ID [" + id + "] does not exist");
         }
 
@@ -52,9 +52,9 @@ public class UserService {
     }
 
     public void removeUser(Long id) {
-        Optional<User> userById = userRepository.findUserById(id);
+        boolean userExists = userRepository.existsById(id);
 
-        if (userById.isEmpty()) {
+        if (!userExists) {
             throw new IllegalArgumentException("User ID [" + id + "] does not exist");
         }
 
