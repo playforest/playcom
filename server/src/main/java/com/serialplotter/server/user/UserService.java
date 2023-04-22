@@ -1,15 +1,25 @@
 package com.serialplotter.server.user;
 
 import jakarta.transaction.Transactional;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class UserService {
+    /*
+    TODO:
+    - send back meaningful response payloads
+
+     */
 
     private final UserRepository userRepository;
 
@@ -51,12 +61,36 @@ public class UserService {
                                        user.getLastlogin(), LocalDateTime.now(), user.getStatus());
     }
 
+    @Transactional
+    public void partialUpdateUser(Long id, Map<String, Object> updates) {
+        Optional<User> userById = userRepository.findUserById(id);
+
+        if(userById.isEmpty()) {
+            throw new IllegalArgumentException("User ID [" + id + "] does not exist");
+        } else {
+            User user = userById.get();
+
+            updates.forEach((property, value) -> {
+                try {
+                    PropertyUtils.setProperty(user, property, value);
+                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    throw new RuntimeException("Error updating property " + property, e);
+                }
+            });
+            userRepository.save(user);
+        }
+    }
+
     public void removeUser(Long id) {
         boolean userExists = userRepository.existsById(id);
 
         if (!userExists) {
             throw new IllegalArgumentException("User ID [" + id + "] does not exist");
         }
+        /*
+        TODO:
+        - change function from deleting user from db to changing isDeleted field to True
+         */
 
         userRepository.deleteById(id);
     }

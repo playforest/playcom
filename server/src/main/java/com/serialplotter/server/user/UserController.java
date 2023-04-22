@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path="api/v1/users")
@@ -31,6 +32,11 @@ public class UserController {
     public User updateUser(@PathVariable Long userId, @RequestBody User user) {
         userService.updateUser(userId, user);
         return user;
+    }
+
+    @PatchMapping(path="/{userId}")
+    public void partialUpdateUser(@PathVariable Long userId, @RequestBody Map<String, Object> updates) {
+        userService.partialUpdateUser(userId, updates);
     }
 
     @DeleteMapping(path="/{userId}")
