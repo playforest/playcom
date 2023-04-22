@@ -1,7 +1,6 @@
 package com.serialplotter.server.user;
 
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -28,13 +27,14 @@ public class User {
     private Long daysSinceLastLogin;
     private LocalDate createdDate;
     private Boolean status;
+    private Boolean isDeleted;
 
     public User() {
 
     }
 
     public User(Long id, String name, String email, String role,
-                LocalDate lastlogin, LocalDate createdDate, Boolean status) {
+                LocalDate lastlogin, LocalDate createdDate, Boolean status, Boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -42,16 +42,18 @@ public class User {
         this.lastlogin = lastlogin;
         this.createdDate = createdDate;
         this.status = status;
+        this.isDeleted = isDeleted;
     }
 
     public User(String name, String email, String role, LocalDate lastlogin,
-                LocalDate createdDate, Boolean status) {
+                LocalDate createdDate, Boolean status, Boolean isDeleted) {
         this.name = name;
         this.email = email;
         this.role = role;
         this.lastlogin = lastlogin;
         this.createdDate = createdDate;
         this.status = status;
+        this.isDeleted = isDeleted;
     }
 
     public Long getId() {
@@ -116,6 +118,14 @@ public class User {
         this.status = status;
     }
 
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -127,6 +137,7 @@ public class User {
                 ", daysSinceLastLogin=" + daysSinceLastLogin +
                 ", createdDate=" + createdDate +
                 ", status=" + status +
+                ", isDeleted=" + isDeleted +
                 '}';
     }
 

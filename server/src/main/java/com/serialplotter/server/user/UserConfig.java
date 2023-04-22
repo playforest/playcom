@@ -20,8 +20,8 @@ public class UserConfig {
                     "Admin",
                     LocalDate.of(2023, Month.JANUARY, 21),
                     LocalDate.of(2022, Month.OCTOBER, 12),
-                    true
-            );
+                    true,
+                    false);
 
             User sarah = new User(
                     "Sarah",
@@ -29,8 +29,8 @@ public class UserConfig {
                     "Viewer",
                     LocalDate.of(2023, Month.FEBRUARY, 17),
                     LocalDate.of(2021, Month.APRIL, 9),
-                    true
-            );
+                    true,
+                    false);
 
             repository.saveAll(List.of(imran, sarah));
         };
