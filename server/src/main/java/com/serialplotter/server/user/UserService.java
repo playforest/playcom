@@ -1,9 +1,9 @@
 package com.serialplotter.server.user;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +29,25 @@ public class UserService {
         }
 
         userRepository.save(user);
+    }
+
+    @Transactional
+    public void updateUser(Long id, User user) {
+        /*
+         TODO:
+          - validation for case where user ID is passed with an
+            already existing email address
+          -
+        */
+        Optional<User> userById = userRepository.findUserById(id);
+
+        if (userById.isEmpty()) {
+            throw new IllegalArgumentException("User ID [" + id + "] does not exist");
+        }
+
+
+        userRepository.updateUserById(id, user.getName(), user.getEmail(), user.getRole(),
+                                       user.getLastlogin(), user.getStatus());
     }
 
     public void removeUser(Long id) {

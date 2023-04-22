@@ -22,7 +22,7 @@ public class User {
     private String name;
     private String email;
     private String role;
-    private LocalDate lastlogin;
+    private LocalDate lastLogin;
     @Transient
     private Long daysSinceLastLogin;
     private LocalDate createdDate;
@@ -39,7 +39,7 @@ public class User {
         this.name = name;
         this.email = email;
         this.role = role;
-        this.lastlogin = lastlogin;
+        this.lastLogin = lastlogin;
         this.createdDate = createdDate;
         this.status = status;
         this.isDeleted = isDeleted;
@@ -50,7 +50,7 @@ public class User {
         this.name = name;
         this.email = email;
         this.role = role;
-        this.lastlogin = lastlogin;
+        this.lastLogin = lastlogin;
         this.createdDate = createdDate;
         this.status = status;
         this.isDeleted = isDeleted;
@@ -97,16 +97,16 @@ public class User {
     }
 
     public LocalDate getLastlogin() {
-        return lastlogin;
+        return lastLogin;
     }
 
-    public void setLastlogin(LocalDate lastlogin) {
-        this.lastlogin = lastlogin;
+    public void setLastlogin(LocalDate lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
     public Long getDaysSinceLastLogin() {
         LocalDate currentDate = LocalDate.now();
-        this.daysSinceLastLogin = ChronoUnit.DAYS.between(this.lastlogin, currentDate);
+        this.daysSinceLastLogin = ChronoUnit.DAYS.between(this.lastLogin, currentDate);
         return daysSinceLastLogin;
     }
 
@@ -133,7 +133,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
-                ", lastlogin=" + lastlogin +
+                ", lastLogin=" + lastLogin +
                 ", daysSinceLastLogin=" + daysSinceLastLogin +
                 ", createdDate=" + createdDate +
                 ", status=" + status +
