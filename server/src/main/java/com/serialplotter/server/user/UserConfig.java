@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class UserConfig {
                     "Admin",
                     LocalDate.of(2023, Month.JANUARY, 21),
                     LocalDate.of(2022, Month.OCTOBER, 12),
-                    true,
+                    LocalDateTime.now(), true,
                     false);
 
             User sarah = new User(
@@ -29,7 +30,7 @@ public class UserConfig {
                     "Viewer",
                     LocalDate.of(2023, Month.FEBRUARY, 17),
                     LocalDate.of(2021, Month.APRIL, 9),
-                    true,
+                    LocalDateTime.now(), true,
                     false);
 
             repository.saveAll(List.of(imran, sarah));

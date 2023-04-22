@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class UserService {
 
 
         userRepository.updateUserById(id, user.getName(), user.getEmail(), user.getRole(),
-                                       user.getLastlogin(), user.getStatus());
+                                       user.getLastlogin(), LocalDateTime.now(), user.getStatus());
     }
 
     public void removeUser(Long id) {

@@ -3,6 +3,8 @@ package com.serialplotter.server.user;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
 @Entity
@@ -26,6 +28,12 @@ public class User {
     @Transient
     private Long daysSinceLastLogin;
     private LocalDate createdDate;
+    private LocalDateTime lastUpdated;
+
+    @PreUpdate
+    public void onUpdate() {
+        lastUpdated = LocalDateTime.now();
+    }
     private Boolean status;
     private Boolean isDeleted;
 
@@ -34,24 +42,28 @@ public class User {
     }
 
     public User(Long id, String name, String email, String role,
-                LocalDate lastlogin, LocalDate createdDate, Boolean status, Boolean isDeleted) {
+                LocalDate lastLogin, LocalDate createdDate, LocalDateTime lastUpdated,
+                Boolean status, Boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.role = role;
-        this.lastLogin = lastlogin;
+        this.lastLogin = lastLogin;
         this.createdDate = createdDate;
+        this.lastUpdated = lastUpdated;
         this.status = status;
         this.isDeleted = isDeleted;
     }
 
     public User(String name, String email, String role, LocalDate lastlogin,
-                LocalDate createdDate, Boolean status, Boolean isDeleted) {
+                LocalDate createdDate, LocalDateTime lastUpdated,
+                Boolean status, Boolean isDeleted) {
         this.name = name;
         this.email = email;
         this.role = role;
         this.lastLogin = lastlogin;
         this.createdDate = createdDate;
+        this.lastUpdated = lastUpdated;
         this.status = status;
         this.isDeleted = isDeleted;
     }
@@ -110,6 +122,14 @@ public class User {
         return daysSinceLastLogin;
     }
 
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
     public Boolean getStatus() {
         return status;
     }
@@ -136,6 +156,7 @@ public class User {
                 ", lastLogin=" + lastLogin +
                 ", daysSinceLastLogin=" + daysSinceLastLogin +
                 ", createdDate=" + createdDate +
+                ", lastUpdated=" + lastUpdated +
                 ", status=" + status +
                 ", isDeleted=" + isDeleted +
                 '}';
