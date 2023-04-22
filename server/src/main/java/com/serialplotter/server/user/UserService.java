@@ -18,7 +18,6 @@ public class UserService {
     /*
     TODO:
     - send back meaningful response payloads
-
      */
 
     private final UserRepository userRepository;
@@ -43,32 +42,44 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUser(Long id, User user) {
+    public void updateUser(Long id, User updatedUser) {
         /*
          TODO:
           - validation for case where user ID is passed with an
             already existing email address
-          -
+          - email validation (both format and duplicates)
+          - research cleaner way of handling validation
+          - check for already existing username
         */
-        boolean userExists = userRepository.existsById(id);
+        Optional<User> userOptional = userRepository.findUserById(id);
 
-        if (!userExists) {
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            if (updatedUser.getName().length() > 3) {
+                user.setName(updatedUser.getName());
+            } else {
+                throw new IllegalArgumentException("username needs to be at least 3 characters long");
+            }
+
+            user.setEmail(updatedUser.getEmail());
+            user.setRole(updatedUser.getRole());
+            user.setStatus(updatedUser.getStatus());
+
+            userRepository.save(user);
+        } else {
             throw new IllegalArgumentException("User ID [" + id + "] does not exist");
         }
-
-
-        userRepository.updateUserById(id, user.getName(), user.getEmail(), user.getRole(),
-                                       user.getLastlogin(), LocalDateTime.now(), user.getStatus());
     }
 
     @Transactional
     public void partialUpdateUser(Long id, Map<String, Object> updates) {
-        Optional<User> userById = userRepository.findUserById(id);
+        Optional<User> userOptional = userRepository.findUserById(id);
 
-        if(userById.isEmpty()) {
+        if(userOptional.isEmpty()) {
             throw new IllegalArgumentException("User ID [" + id + "] does not exist");
         } else {
-            User user = userById.get();
+            User user = userOptional.get();
 
             updates.forEach((property, value) -> {
                 try {

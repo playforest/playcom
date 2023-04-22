@@ -20,12 +20,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findUserById(Long id);
 
-    @Modifying
-    @Query("UPDATE User u SET u.name = :name, u.email = :email, u.role = :role, " +
-            "u.lastLogin = :lastLogin, u.lastUpdated=:lastUpdated, u.status = :status WHERE u.id = :id")
-    void updateUserById(@Param("id") Long id, @Param("name") String name,
-                       @Param("email") String email, @Param("role") String role,
-                       @Param("lastLogin") LocalDate lastLogin, @Param("lastUpdated") LocalDateTime lastUpdated,
-                       @Param("status") Boolean status);
-
 }
