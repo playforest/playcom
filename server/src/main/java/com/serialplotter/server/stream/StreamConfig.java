@@ -15,7 +15,7 @@ public class StreamConfig {
             Stream gyro = new Stream(
                     "gyro data",
                     "usb.modem1411.c",
-                    1925000L,
+                    1925000,
                     "s3://bucket-name/mpu6050.csv",
                     1L,
                     LocalDateTime.now(),
@@ -24,7 +24,7 @@ public class StreamConfig {
             Stream helloWorld = new Stream(
                     "playcom",
                     "dev/tty.stm32",
-                    16000L,
+                    16000,
                     "s3://bucket-name/stm32f10r8tc.csv",
                     1L,
                     LocalDateTime.now(),

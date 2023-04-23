@@ -1,5 +1,8 @@
 package com.serialplotter.server.stream;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,8 +23,9 @@ public class Stream {
     private Long streamId;
     private String streamName;
     private String port;
-    private Long baudRate;
+    private int baudRate;
     private String filePath;
+
     private Long createdByUserId;
     private LocalDateTime createdDate;
     @PrePersist
@@ -39,7 +43,7 @@ public class Stream {
 
     }
 
-    public Stream(String streamName, String port, Long baudRate, String filePath, Long createdByUserId, LocalDateTime lastUpdated, Boolean isDeleted) {
+    public Stream(String streamName, String port, int baudRate, String filePath, Long createdByUserId, LocalDateTime lastUpdated, Boolean isDeleted) {
         this.streamName = streamName;
         this.port = port;
         this.baudRate = baudRate;
@@ -49,7 +53,7 @@ public class Stream {
         this.isDeleted = isDeleted;
     }
 
-    public Stream(Long streamId, String streamName, String port, Long baudRate, String filePath, Long createdByUserId, LocalDateTime lastUpdated, Boolean isDeleted) {
+    public Stream(Long streamId, String streamName, String port, int baudRate, String filePath, Long createdByUserId, LocalDateTime lastUpdated, Boolean isDeleted) {
         this.streamId = streamId;
         this.streamName = streamName;
         this.port = port;
@@ -84,11 +88,11 @@ public class Stream {
         this.port = port;
     }
 
-    public Long getBaudRate() {
+    public int getBaudRate() {
         return baudRate;
     }
 
-    public void setBaudRate(Long baudRate) {
+    public void setBaudRate(int baudRate) {
         this.baudRate = baudRate;
     }
 

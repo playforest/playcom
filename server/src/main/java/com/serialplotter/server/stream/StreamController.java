@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path="api/v1/streams")
@@ -32,9 +33,13 @@ public class StreamController {
     }
 
     @PutMapping(path="/{streamId}")
-    public Stream updateStream(@PathVariable Long streamId, @RequestBody Stream stream) {
+    public void updateStream(@PathVariable Long streamId, @RequestBody Stream stream) {
         streamService.updateStream(streamId, stream);
-        return stream;
+    }
+
+    @PatchMapping(path="/{streamId}")
+    public void patchStream(@PathVariable Long streamId, @RequestBody Map<String, Object> streamUpdates) {
+        streamService.partialUpdateStream(streamId, streamUpdates);
     }
 
     @DeleteMapping(path="/{streamId}")

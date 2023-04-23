@@ -1,11 +1,14 @@
 package com.serialplotter.server.stream;
 
 import com.serialplotter.server.user.UserRepository;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -39,7 +42,7 @@ public class StreamService {
         return streamRepository.save(stream);
     }
 
-    public Stream updateStream(Long streamId, Stream updatedStream) {
+    public void updateStream(Long streamId, Stream updatedStream) {
         Optional<Stream> optionalStream = streamRepository.findById(updatedStream.getStreamId());
 
         if (optionalStream.isPresent()) {
@@ -55,13 +58,15 @@ public class StreamService {
                 stream.setStreamName(updatedStream.getStreamName());
             }
 
-            if(updatedStream.getBaudRate() == null) {
+            Optional<Integer> optionalBaudRate = Optional.ofNullable(updatedStream.getBaudRate());
+
+            if(!(optionalBaudRate.isPresent() && optionalBaudRate.get() > 0)) {
                 throw new IllegalArgumentException("baud rate cannot be empty");
             } else {
                 stream.setBaudRate(updatedStream.getBaudRate());
             }
 
-            if(updatedStream.getPort().length()<1) {
+            if(updatedStream.getPort().length() < 1) {
                 throw new IllegalArgumentException("port cannot be empty");
             } else {
                 stream.setPort(updatedStream.getPort());
@@ -69,7 +74,29 @@ public class StreamService {
 
             streamRepository.save(stream);
         }
-        return updatedStream;
+    }
+
+    public void partialUpdateStream(Long streamId, Map<String, Object> streamUpdates) {
+        /*
+        TODO:
+        - check if put validations are cicumvented here
+         */
+        Optional<Stream> optionalStream = streamRepository.findById(streamId);
+
+        if(optionalStream.isPresent()) {
+            Stream stream = optionalStream.get();
+
+            streamUpdates.forEach((property, value) -> {
+                try {
+                    if(property != "createdByUserId")
+                        PropertyUtils.setProperty(stream, property, value);
+                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    throw new RuntimeException("Error updating property " + property, e);
+                }
+            });
+
+            streamRepository.save(stream);
+        }
     }
 
     public void softDeleteStream(Long streamId) {
