@@ -72,4 +72,27 @@ public class StreamService {
         return updatedStream;
     }
 
+    public void softDeleteStream(Long streamId) {
+        Optional<Stream> optionalStream = streamRepository.findById(streamId);
+
+        if(optionalStream.isPresent()) {
+            Stream stream = optionalStream.get();
+            stream.setDeleted(true);
+            streamRepository.save(stream);
+        } else {
+            throw new IllegalArgumentException("stream ID [" + streamId + "] not found");
+        }
+    }
+
+    public void hardDeleteStream(Long streamId) {
+        Optional<Stream> optionalStream = streamRepository.findById(streamId);
+
+        if(optionalStream.isPresent()) {
+            Stream stream = optionalStream.get();
+            streamRepository.deleteById(streamId);
+        } else {
+            throw new IllegalArgumentException("stream ID [" + streamId + "] not found");
+        }
+    }
+
 }

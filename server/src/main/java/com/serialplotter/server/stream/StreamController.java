@@ -37,5 +37,15 @@ public class StreamController {
         return stream;
     }
 
+    @DeleteMapping(path="/{streamId}")
+    public void softDeleteStream(@PathVariable Long streamId) {
+        streamService.softDeleteStream(streamId);
+    }
+
+    @DeleteMapping(path="/hard-delete/{streamId}")
+    public void hardDeleteStream(@PathVariable Long streamId) {
+        streamService.hardDeleteStream(streamId);
+    }
+
 
 }
