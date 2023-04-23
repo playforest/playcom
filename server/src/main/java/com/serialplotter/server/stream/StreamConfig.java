@@ -10,7 +10,7 @@ import java.util.List;
 @Configuration
 public class StreamConfig {
     @Bean
-    CommandLineRunner commandLineRunner(StreamRepository repository) {
+    CommandLineRunner streamCommandLineRunner(StreamRepository repository) {
         return args -> {
             Stream gyro = new Stream(
                     "gyro data",
