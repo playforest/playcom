@@ -23,13 +23,42 @@ public class Stream {
     private Long baudRate;
     private String filePath;
     private Long createdByUserId;
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
+    @PrePersist
+    public void onCreate() {
+        createdDate = LocalDateTime.now();
+    }
     private LocalDateTime lastUpdated;
     @PreUpdate
     public void onUpdate() {
         lastUpdated = LocalDateTime.now();
     }
     private Boolean isDeleted;
+
+    public Stream() {
+
+    }
+
+    public Stream(String streamName, String port, Long baudRate, String filePath, Long createdByUserId, LocalDateTime lastUpdated, Boolean isDeleted) {
+        this.streamName = streamName;
+        this.port = port;
+        this.baudRate = baudRate;
+        this.filePath = filePath;
+        this.createdByUserId = createdByUserId;
+        this.lastUpdated = lastUpdated;
+        this.isDeleted = isDeleted;
+    }
+
+    public Stream(Long streamId, String streamName, String port, Long baudRate, String filePath, Long createdByUserId, LocalDateTime lastUpdated, Boolean isDeleted) {
+        this.streamId = streamId;
+        this.streamName = streamName;
+        this.port = port;
+        this.baudRate = baudRate;
+        this.filePath = filePath;
+        this.createdByUserId = createdByUserId;
+        this.lastUpdated = lastUpdated;
+        this.isDeleted = isDeleted;
+    }
 
     public Long getStreamId() {
         return streamId;
@@ -79,12 +108,8 @@ public class Stream {
         this.createdByUserId = createdByUserId;
     }
 
-    public LocalDate getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
-    }
-
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
     }
 
     public Boolean getDeleted() {
