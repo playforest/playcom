@@ -21,9 +21,9 @@ public class Sync {
     private Long syncId;
     private Long userId;
     private Long streamId;
-    private String syncType;
+    private String operation;
     private LocalDateTime syncRequestDate;
-    private String syncStatus;
+    private String status;
 
     @PreUpdate
     public void onUpdate() {
@@ -34,12 +34,19 @@ public class Sync {
 
     }
 
-    public Sync(Long syncId, Long userId, Long streamId, String syncType, LocalDateTime syncRequestDate) {
-        this.syncId = syncId;
+    public Sync( Long userId, Long streamId, String operation, String status) {
         this.userId = userId;
         this.streamId = streamId;
-        this.syncType = syncType;
+        this.operation = operation;
+        this.status = status;
+    }
+
+    public Sync( Long userId, Long streamId, String operation, LocalDateTime syncRequestDate, String status) {
+        this.userId = userId;
+        this.streamId = streamId;
+        this.operation = operation;
         this.syncRequestDate = syncRequestDate;
+        this.status = status;
     }
 
     public Long getSyncId() {
@@ -66,23 +73,23 @@ public class Sync {
         this.streamId = streamId;
     }
 
-    public String getSyncType() {
-        return syncType;
+    public String getOperation() {
+        return operation;
     }
 
-    public void setSyncType(String syncType) {
-        this.syncType = syncType;
+    public void setOperation(String operation) {
+        this.operation = operation;
     }
 
     public LocalDateTime getSyncRequestDate() {
         return syncRequestDate;
     }
 
-    public String getSyncStatus() {
-        return syncStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setSyncStatus(String syncStatus) {
-        this.syncStatus = syncStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
