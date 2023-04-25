@@ -18,7 +18,7 @@ public class S3SyncService {
     public S3SyncService() {
     }
 
-    public void writeObject(String key, String data) {
+    public Boolean writeObject(String key, String data) {
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.US_EAST_2)
                 .withCredentials(new ProfileCredentialsProvider(PROFILE_NAME))
@@ -33,10 +33,10 @@ public class S3SyncService {
             s3.putObject(putObjectRequest);
         } catch (AmazonServiceException e) {
             System.err.println(e.getErrorMessage());
-            System.exit(1);
+            return false;
         }
         System.out.println("done");
-
+        return true;
     }
 
     public void listObjects(String bucketName) {
@@ -53,14 +53,16 @@ public class S3SyncService {
         }
     }
 
-    public static void downloadObject(String bucketName, String key) {
+    public String downloadObject(String key) {
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.US_EAST_2)
                 .withCredentials(new ProfileCredentialsProvider(PROFILE_NAME))
                 .build();
 
+        StringBuilder result = new StringBuilder();
+
         try {
-            S3Object o = s3.getObject(bucketName, key);
+            S3Object o = s3.getObject(BUCKET_NAME, key);
             S3ObjectInputStream s3is = o.getObjectContent();
 
 //            FileOutputStream fos = new FileOutputStream(new File(key));
@@ -76,6 +78,7 @@ public class S3SyncService {
             String line;
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
+                result.append(line).append("\n");
             }
 
             s3is.close();
@@ -90,6 +93,8 @@ public class S3SyncService {
             System.err.println(e.getMessage());
             System.exit(1);
         }
+
+        return result.toString();
     }
 
     public void deleteObject(String bucketName, String key) {
