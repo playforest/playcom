@@ -1,15 +1,20 @@
 package com.serialplotter.server.user;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @SequenceGenerator(
             name="users_sequence",
@@ -22,8 +27,10 @@ public class User {
     )
     private Long id;
     private String name;
+    private String username;
+    private String password;
     private String email;
-    private String role;
+    private UserRole role;
     private LocalDate lastLogin;
     @Transient
     private Long daysSinceLastLogin;
@@ -34,16 +41,17 @@ public class User {
     public void onUpdate() {
         lastUpdated = LocalDateTime.now();
     }
-    private Boolean status;
+    private Boolean locked;
+    private Boolean enabled;
     private Boolean isDeleted;
 
     public User() {
 
     }
 
-    public User(Long id, String name, String email, String role,
+    public User(Long id, String name, String email, UserRole role,
                 LocalDate lastLogin, LocalDate createdDate, LocalDateTime lastUpdated,
-                Boolean status, Boolean isDeleted) {
+                Boolean enabled, Boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -51,20 +59,20 @@ public class User {
         this.lastLogin = lastLogin;
         this.createdDate = createdDate;
         this.lastUpdated = lastUpdated;
-        this.status = status;
+        this.enabled = enabled;
         this.isDeleted = isDeleted;
     }
 
-    public User(String name, String email, String role, LocalDate lastlogin,
+    public User(String name, String email, UserRole role, LocalDate lastlogin,
                 LocalDate createdDate, LocalDateTime lastUpdated,
-                Boolean status, Boolean isDeleted) {
+                Boolean enabled, Boolean isDeleted) {
         this.name = name;
         this.email = email;
         this.role = role;
         this.lastLogin = lastlogin;
         this.createdDate = createdDate;
         this.lastUpdated = lastUpdated;
-        this.status = status;
+        this.enabled = enabled;
         this.isDeleted = isDeleted;
     }
 
@@ -92,11 +100,11 @@ public class User {
         this.email = email;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 
@@ -131,11 +139,11 @@ public class User {
     }
 
     public Boolean getStatus() {
-        return status;
+        return this.enabled;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setStatus(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Boolean getDeleted() {
@@ -157,10 +165,45 @@ public class User {
                 ", daysSinceLastLogin=" + daysSinceLastLogin +
                 ", createdDate=" + createdDate +
                 ", lastUpdated=" + lastUpdated +
-                ", status=" + status +
+                ", enabled=" + enabled +
                 ", isDeleted=" + isDeleted +
                 '}';
     }
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
+        return Collections.singletonList(authority);
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 }

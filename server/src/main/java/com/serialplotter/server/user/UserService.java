@@ -4,6 +4,9 @@ import jakarta.transaction.Transactional;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -14,14 +17,14 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     /*
     TODO:
     - send back meaningful response payloads
      */
 
     private final UserRepository userRepository;
-
+    private final static String USER_NOT_FOUND_MESSAGE = "User with email %s not found";
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -40,6 +43,12 @@ public class UserService {
         } else {
             throw new IllegalArgumentException("User ID [" + userId + "] does not exist");
         }
+    }
+
+    @Override
+    public User loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE)));
     }
 
     public void insertUser(User user) {
@@ -116,4 +125,5 @@ public class UserService {
 
         userRepository.deleteById(userId);
     }
+
 }

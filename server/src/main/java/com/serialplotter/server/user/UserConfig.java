@@ -18,7 +18,7 @@ public class UserConfig {
             User imran = new User(
                     "Imran",
                     "playforest0x@gmail.com",
-                    "Admin",
+                    UserRole.ADMIN,
                     LocalDate.of(2023, Month.JANUARY, 21),
                     LocalDate.of(2022, Month.OCTOBER, 12),
                     LocalDateTime.now(), true,
@@ -27,7 +27,7 @@ public class UserConfig {
             User sarah = new User(
                     "Sarah",
                     "winocm@gmail.com",
-                    "Viewer",
+                    UserRole.USER,
                     LocalDate.of(2023, Month.FEBRUARY, 17),
                     LocalDate.of(2021, Month.APRIL, 9),
                     LocalDateTime.now(), true,
