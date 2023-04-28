@@ -47,7 +47,7 @@ public class UserService implements UserDetailsService {
     @Override
     public User loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findUserByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE)));
+                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, email)));
     }
 
     public String signUpUser(User user) {
