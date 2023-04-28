@@ -26,15 +26,14 @@ public class User implements UserDetails {
             generator = "users_sequence"
     )
     private Long id;
-    private String name;
     private String username;
     private String password;
     private String email;
     private UserRole role;
-    private LocalDate lastLogin;
+    private LocalDateTime lastLogin;
     @Transient
     private Long daysSinceLastLogin;
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     private LocalDateTime lastUpdated;
 
     @PreUpdate
@@ -49,11 +48,11 @@ public class User implements UserDetails {
 
     }
 
-    public User(Long id, String name, String email, UserRole role,
-                LocalDate lastLogin, LocalDate createdDate, LocalDateTime lastUpdated,
+    public User(Long id, String username, String email, UserRole role,
+                LocalDateTime lastLogin, LocalDateTime createdDate, LocalDateTime lastUpdated,
                 Boolean enabled, Boolean isDeleted) {
         this.id = id;
-        this.name = name;
+        this.username = username;
         this.email = email;
         this.role = role;
         this.lastLogin = lastLogin;
@@ -63,13 +62,26 @@ public class User implements UserDetails {
         this.isDeleted = isDeleted;
     }
 
-    public User(String name, String email, UserRole role, LocalDate lastlogin,
-                LocalDate createdDate, LocalDateTime lastUpdated,
+    public User(String username, String email, UserRole role, LocalDateTime lastlogin,
+                LocalDateTime createdDate, LocalDateTime lastUpdated,
                 Boolean enabled, Boolean isDeleted) {
-        this.name = name;
+        this.username = username;
         this.email = email;
         this.role = role;
         this.lastLogin = lastlogin;
+        this.createdDate = createdDate;
+        this.lastUpdated = lastUpdated;
+        this.enabled = enabled;
+        this.isDeleted = isDeleted;
+    }
+
+    public User(String username, String email, String password, UserRole role,
+                LocalDateTime createdDate, LocalDateTime lastUpdated,
+                Boolean enabled, Boolean isDeleted) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
         this.createdDate = createdDate;
         this.lastUpdated = lastUpdated;
         this.enabled = enabled;
@@ -84,12 +96,8 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -108,19 +116,19 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public LocalDate getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public LocalDate getLastlogin() {
+    public LocalDateTime getLastlogin() {
         return lastLogin;
     }
 
-    public void setLastlogin(LocalDate lastLogin) {
+    public void setLastlogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
     }
 
@@ -158,7 +166,7 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
                 ", lastLogin=" + lastLogin +
@@ -180,6 +188,10 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

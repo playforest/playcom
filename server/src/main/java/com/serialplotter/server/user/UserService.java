@@ -2,16 +2,13 @@ package com.serialplotter.server.user;
 
 import jakarta.transaction.Transactional;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,10 +21,12 @@ public class UserService implements UserDetailsService {
      */
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final static String USER_NOT_FOUND_MESSAGE = "User with email %s not found";
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public List<User> getUsers() {
@@ -49,6 +48,27 @@ public class UserService implements UserDetailsService {
     public User loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE)));
+    }
+
+    public String signUpUser(User user) {
+        boolean userExists = userRepository
+                .findUserByEmail(user.getEmail())
+                .isPresent();
+
+        if (userExists) {
+            throw new IllegalStateException("email already taken");
+        }
+
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        System.out.println(encodedPassword);
+
+        userRepository.save(user);
+
+
+        // todo: send confirmation token
+
+        return "User sign up successfull";
     }
 
     public void insertUser(User user) {
@@ -76,8 +96,8 @@ public class UserService implements UserDetailsService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
 
-            if (updatedUser.getName().length() > 3) {
-                user.setName(updatedUser.getName());
+            if (updatedUser.getUsername().length() > 3) {
+                user.setUsername(updatedUser.getUsername());
             } else {
                 throw new IllegalArgumentException("username needs to be at least 3 characters long");
             }
