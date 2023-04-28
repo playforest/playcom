@@ -20,4 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findUserById(Long id);
 
+    @Modifying
+    @Query("UPDATE User u SET u.enabled = TRUE where u.id = :id")
+    void setUserEnabled(@Param("id") Long id);
 }

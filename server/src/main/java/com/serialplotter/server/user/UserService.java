@@ -158,4 +158,9 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(userId);
     }
 
+    public void enableUser(Long id) {
+        userRepository.setUserEnabled(id);
+    }
+
+
 }

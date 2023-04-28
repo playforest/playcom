@@ -4,6 +4,7 @@ import com.serialplotter.server.user.User;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class ConfirmationToken {
     @SequenceGenerator(
             name = "confirmation_token_sequence",
@@ -31,6 +32,7 @@ public class ConfirmationToken {
     )
     private User user;
 
+
     public ConfirmationToken() {
     }
 
@@ -56,6 +58,10 @@ public class ConfirmationToken {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public LocalDateTime getCreatedAt() {
