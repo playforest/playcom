@@ -31,7 +31,8 @@ public class WebSecurityConfig {
             .anyRequest()
             .authenticated()
             .and()
-            .formLogin();
+            .formLogin()
+                .defaultSuccessUrl("/success", true);
 
         auth.authenticationProvider(daoAuthenticationProvider());
 

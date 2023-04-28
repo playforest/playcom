@@ -1,5 +1,7 @@
 package com.serialplotter.server.user;
 
+import com.serialplotter.server.registration.token.ConfirmationToken;
+import com.serialplotter.server.registration.token.ConfirmationTokenService;
 import jakarta.transaction.Transactional;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +11,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -22,11 +26,13 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
     private final static String USER_NOT_FOUND_MESSAGE = "User with email %s not found";
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.confirmationTokenService = confirmationTokenService;
     }
 
     public List<User> getUsers() {
@@ -65,10 +71,16 @@ public class UserService implements UserDetailsService {
 
         userRepository.save(user);
 
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                user);
 
-        // todo: send confirmation token
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        return "User sign up successfull";
+        return token;
     }
 
     public void insertUser(User user) {
