@@ -40,9 +40,9 @@ public class User implements UserDetails {
     public void onUpdate() {
         lastUpdated = LocalDateTime.now();
     }
-    private Boolean locked;
-    private Boolean enabled;
-    private Boolean isDeleted;
+    private Boolean locked = false;
+    private Boolean enabled = false;
+    private Boolean isDeleted = false;
 
     public User() {
 
