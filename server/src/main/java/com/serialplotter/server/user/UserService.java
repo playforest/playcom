@@ -4,6 +4,8 @@ import com.serialplotter.server.registration.token.ConfirmationToken;
 import com.serialplotter.server.registration.token.ConfirmationTokenService;
 import jakarta.transaction.Transactional;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +21,9 @@ import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+
     /*
     TODO:
     - send back meaningful response payloads
@@ -56,12 +61,22 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, email)));
     }
 
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
     public String signUpUser(User user) {
         boolean userExists = userRepository
                 .findUserByEmail(user.getEmail())
                 .isPresent();
 
         if (userExists) {
+            // TODO: check of attributes are the same
+            // and if not confirmed send confirmation email
+            // test case: we force expire token and then try
+            // to sign up with the same email, this triggers
+            // an 'email already taken' exception
+
             throw new IllegalStateException("email already taken");
         }
 

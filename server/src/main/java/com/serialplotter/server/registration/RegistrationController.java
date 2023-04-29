@@ -1,12 +1,13 @@
 package com.serialplotter.server.registration;
 
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/v1/registration")
 public class RegistrationController {
 
-    private RegistrationService registrationService;
+    private final RegistrationService registrationService;
 
     public RegistrationController(RegistrationService registrationService) {
         this.registrationService = registrationService;
@@ -17,7 +18,7 @@ public class RegistrationController {
         return registrationService.register(request);
     }
 
-    @GetMapping(path="confirm")
+    @GetMapping(path="/confirm")
     public String confirm(@RequestParam("token") String token) {
         return registrationService.confirmToken(token);
     }
