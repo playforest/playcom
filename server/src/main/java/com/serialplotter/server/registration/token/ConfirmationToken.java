@@ -87,4 +87,5 @@ public class ConfirmationToken {
     public void setConfirmedAt(LocalDateTime confirmedAt) {
         this.confirmedAt = confirmedAt;
     }
+
 }
