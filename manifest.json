@@ -1,25 +1,20 @@
-{
-    "name": "Serial Plotter",
-    "description": "Real time, cross-platform serial plotting software",
-    "version": "1.0",
+
+  {
     "manifest_version": 3,
-    "background": {
-      "service_worker": "background.js"
-    },
-    "permissions":["tabs"],
+    "name": "Serial Monitor",
+    "version": "1.0",
+    "description": "Real time, cross-platform serial monitoring software with plotting and cloud syncing.",
     "action": {
-      "default_popup": "popup.html",
       "default_icon": {
-        "16": "/images/get_started16.png",
-        "32": "/images/get_started32.png",
-        "48": "/images/get_started48.png",
-        "128": "/images/get_started128.png"
+        "16": "client/images/icon-16.png",
+        "32": "client/images/icon-32.png",
+        "48": "client/images/icon-48.png",
+        "128": "client/images/icon-128.png"
       }
     },
-    "icons": {
-      "16": "/images/get_started16.png",
-      "32": "/images/get_started32.png",
-      "48": "/images/get_started48.png",
-      "128": "/images/get_started128.png"
-    }
+    "background": {
+      "service_worker": "client/js/background.js"
+    },
+    "permissions": ["activeTabs"]
   }
+  
