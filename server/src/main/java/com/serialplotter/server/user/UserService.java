@@ -1,5 +1,6 @@
 package com.serialplotter.server.user;
 
+import com.serialplotter.server.registration.EmailValidator;
 import com.serialplotter.server.registration.token.ConfirmationToken;
 import com.serialplotter.server.registration.token.ConfirmationTokenService;
 import jakarta.transaction.Transactional;
@@ -32,12 +33,14 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
+    private final EmailValidator emailValidator;
     private final static String USER_NOT_FOUND_MESSAGE = "User with email %s not found";
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService, EmailValidator emailValidator) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.confirmationTokenService = confirmationTokenService;
+        this.emailValidator = emailValidator;
     }
 
     public List<User> getUsers() {
@@ -56,9 +59,16 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public User loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findUserByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, email)));
+    public User loadUserByUsername(String identifier) throws UsernameNotFoundException {
+
+        if(emailValidator.test(identifier)) {
+            return userRepository.findUserByEmail(identifier)
+                    .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, identifier)));
+        } else {
+            return userRepository.findUserByUsername(identifier)
+                    .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, identifier)));
+        }
+
     }
 
     public Optional<User> findUserByEmail(String email) {
