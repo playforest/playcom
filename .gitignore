@@ -35,3 +35,6 @@ java/build/**
 
 # Dev tests
 dev/
+
+# react
+node_modules
