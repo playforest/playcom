@@ -1,0 +1,10 @@
+/* AppHeader.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Source+Sans+Pro:wght@700&display=swap');
+
+.header {
+  font-family: 'Press Start 2P';
+  font-size: 10px;
+  color: black;
+  background-color: white;
+  line-height: 0;
+}
