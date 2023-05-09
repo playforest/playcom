@@ -12,41 +12,41 @@ const contentStyle = {
     // color: '#fff',
     // backgroundColor: '#108ee9',
 };
-const siderStyle = {
-    textAlign: 'center',
-    lineHeight: '120px',
-    color: '#fff',
-    backgroundColor: '#fff',
-};
-const footerStyle = {
-    textAlign: 'center',
-    color: '#fff',
-    backgroundColor: '#7dbcea',
-};
+// const siderStyle = {
+//     textAlign: 'center',
+//     lineHeight: '120px',
+//     color: '#fff',
+//     backgroundColor: '#fff',
+// };
+// const footerStyle = {
+//     textAlign: 'center',
+//     color: '#fff',
+//     backgroundColor: '#7dbcea',
+// };
 
 const App = () => {
     return (
-        // <Space
-        //     direction="vertical"
-        //     style={{
-        //         width: '100%',
-        //     }}
-        //     size={[0, 0]}
-        // >
-            <Layout>
-                <AppHeader />
-                <Layout>
 
-                    <Content>
+        <Layout>
+            <AppHeader />
+            <Layout>
+
+                <Content>
+                    <Space
+                        direction="vertical"
+                        style={{ display: 'flex' }}
+                        size='large'
+                    >
                         <Plot />
                         <Console />
                         <Settings />
-                    </Content>
-                    <Sider style={siderStyle}>Sider</Sider>
-                </Layout>
-                {/* <Footer style={footerStyle}>Footer</Footer> */}
+                    </Space>
+                </Content>
+                {/* <Sider>Sider</Sider> */}
             </Layout>
-        // </Space>
+            <Footer>Footer</Footer>
+        </Layout>
+
     )
 }
 
