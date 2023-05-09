@@ -10,14 +10,14 @@ const contentStyle = {
     minHeight: 400,
     // lineHeight: '120px',
     // color: '#fff',
-    // backgroundColor: '#108ee9',
+    backgroundColor: '#FFF',
 };
-// const siderStyle = {
-//     textAlign: 'center',
-//     lineHeight: '120px',
-//     color: '#fff',
-//     backgroundColor: '#fff',
-// };
+const siderStyle = {
+    textAlign: 'center',
+    lineHeight: '120px',
+    color: '#fff',
+    backgroundColor: '#fff',
+};
 // const footerStyle = {
 //     textAlign: 'center',
 //     color: '#fff',
@@ -31,7 +31,7 @@ const App = () => {
             <AppHeader />
             <Layout>
 
-                <Content>
+                <Content style={contentStyle}>
                     <Space
                         direction="vertical"
                         style={{ display: 'flex' }}
@@ -42,9 +42,8 @@ const App = () => {
                         <Settings />
                     </Space>
                 </Content>
-                {/* <Sider>Sider</Sider> */}
+                <Sider style={siderStyle}>Sider</Sider>
             </Layout>
-            <Footer>Footer</Footer>
         </Layout>
 
     )
