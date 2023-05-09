@@ -1,4 +1,4 @@
-import { AppHeader, Console, Plot } from './components';
+import { AppHeader, Console, Plot, Settings } from './components';
 
 import React from 'react'
 import { Switch, Link, Route } from 'react-router-dom';
@@ -40,6 +40,7 @@ const App = () => {
                     <Content>
                         <Plot />
                         <Console />
+                        <Settings />
                     </Content>
                     <Sider style={siderStyle}>Sider</Sider>
                 </Layout>
