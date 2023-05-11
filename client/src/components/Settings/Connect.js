@@ -1,17 +1,21 @@
 import { React, useState } from 'react';
 import { Button, Select, Space } from 'antd';
-import { connectToSerialPort, availablePorts } from '../../services/serial';
+import { Port, availablePorts } from '../../services/serial';
 
 
 export const Connect = () => {
     const [baudRate, setBaudRate] = useState(9600);
+    const [ports, setPorts] = useState([]);
 
     const handleBaudRateChange = (value) => {
         setBaudRate(Number(value));
     };
 
     const handleSelectPortClick = async () => {
-        await connectToSerialPort(baudRate);
+        const port = new Port(baudRate);
+        await port.connect();
+        setPorts(oldPorts => [...oldPorts, port]);
+
         availablePorts();
     };
 
