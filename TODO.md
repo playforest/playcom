@@ -3,7 +3,9 @@
 ## Client (React)
 
 ## Client (Services)
-- [ ] Develop service for opening and closing serial port connection
+- [*] Retrieve connected ports
+- [*] Develop service for opening serial port connection
+- [ ] close port
 - [ ] Service for sending data to serial port
 - [ ] Service for receving data from serial port
 - [ ] Error handling
