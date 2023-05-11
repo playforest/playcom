@@ -1,7 +1,21 @@
 import React, { useState } from 'react';
 import { Tabs } from 'antd';
+import { ApiOutlined, StockOutlined } from '@ant-design/icons';
+import { Connect } from './Settings/Connect';
 
-const tabs = ['Connect', 'Plot'];
+const tabs = [
+    {
+        label: 'Connect',
+        icon: ApiOutlined
+    },
+    {
+        label: 'Plot',
+        icon: StockOutlined
+    }
+]
+
+// const tabs = [`${<ApiOutlined/>} Connect`, 'Plot'];
+const label = <ApiOutlined /> + ' Connect';
 
 export const Settings = () => {
     return (
@@ -13,10 +27,18 @@ export const Settings = () => {
                 items={
                     tabs.map((el, i) => {
                         const id = String(i);
+                        const Icon = el['icon'];
                         return {
-                            label: el,
+                            label: (
+                                <span>
+                                    <Icon />
+                                    {el['label']}
+                                </span>
+                            ),
                             key: id,
-                            children: `Content of card tab ${el}`
+                            children: (
+                                <Connect />
+                            )
                         }
                     })
                 }
