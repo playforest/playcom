@@ -6,11 +6,13 @@ import { Connect } from './Settings/Connect';
 const tabs = [
     {
         label: 'Connect',
-        icon: ApiOutlined
+        icon: ApiOutlined,
+        component: (<Connect />)
     },
     {
         label: 'Plot',
-        icon: StockOutlined
+        icon: StockOutlined,
+        component: null
     }
 ]
 
@@ -21,7 +23,7 @@ export const Settings = () => {
     return (
         <div>
             <Tabs
-                defaultActiveKey='1'
+                defaultActiveKey='0'
                 type='card'
                 size='small'
                 items={
@@ -36,9 +38,9 @@ export const Settings = () => {
                                 </span>
                             ),
                             key: id,
-                            children: (
-                                <Connect />
-                            )
+                            children: 
+                                el['component']
+                            
                         }
                     })
                 }
