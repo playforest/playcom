@@ -1,6 +1,8 @@
 # TODO
 
 ## Client (React)
+- [ ] display connected ports
+- [ ] close port button
 
 ## Client (Services)
 - [*] Retrieve connected ports
@@ -8,6 +10,7 @@
 - [ ] close port
 - [ ] Service for sending data to serial port
 - [*] Service for receving data from serial port
+- [ ] Parse incoming data stream
 - [ ] Error handling
 
 ## Backend
