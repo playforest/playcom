@@ -11,6 +11,7 @@
 - [ ] Service for sending data to serial port
 - [*] Service for receving data from serial port
 - [ ] Parse incoming data stream
+- [ ] Display data onto console
 - [ ] Error handling
 
 ## Backend
