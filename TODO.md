@@ -3,6 +3,8 @@
 ## Client (React)
 - [ ] display connected ports
 - [ ] close port button
+- [ ] setup redux states
+    - [ ] serial data state
 
 ## Client (Services)
 - [*] Retrieve connected ports
