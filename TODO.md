@@ -4,6 +4,7 @@
 - [ ] display connected ports
 - [ ] close port button
 - [ ] setup redux states
+    - [ ] serial port slice
     - [ ] serial data state
 
 ## Client (Services)
