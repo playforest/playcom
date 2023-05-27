@@ -115,10 +115,9 @@ export class Port {
     public getPortState() {
         if (this.port) {
             return {
-                port: this.port.getInfo(),
+                port: this.port.getInfo().usbVendorId,
                 baudRate: this.baudRate,
-                lineSeperator: this.lineSeperator,
-                info: this.port.getInfo()
+                lineSeperator: this.lineSeperator
             };
         }
         return null;

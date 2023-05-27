@@ -2,21 +2,19 @@ import { store } from '../../store'
 import { React, useState, useEffect } from 'react';
 import { Button, ConfigProvider, Select, Space } from 'antd';
 import { Port, availablePorts } from '../../services/serial';
-import { setConnectedStatus, saveConnectedPort, pushData } from '../../features/serialData/serialPortSlice';
+import { setConnectedStatus, saveConnectedPort, setBaudRate, pushData } from '../../features/serialData/serialPortSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 export const Connect = () => {
 
     const dispatch = useDispatch();
     const { isConnected } = useSelector((state) => state.serialPort);
-    const [baudRate, setBaudRate] = useState(9600);
+    const baudRate = useSelector((state) => state.serialPort.baudRate);
     const [ports, setPorts] = useState([]);
     const [statusMessage, setStatusMessage] = useState('No ports connected');
-    const [isPortConnected, setIsPortConnected] = useState(false);
-
 
     const handleBaudRateChange = (value) => {
-        setBaudRate(Number(value));
+        dispatch(setBaudRate(Number(value)));
     };
 
     const handleSelectPortClick = async () => {
@@ -25,7 +23,7 @@ export const Connect = () => {
         });
 
         await port.connect();
-        let portInfo = port.getPortState().info.usbVendorId;
+        let portInfo = port.getPortState().port;
 
         if (portInfo) {
             dispatch(saveConnectedPort(port.getPortState()))
@@ -89,8 +87,8 @@ export const Connect = () => {
 
                 <Select
                     placeholder='Baud rate: '
-                    // defaultValue="9600"
-                    style={{ width: 120 }}
+                    defaultValue="9600"
+                    style={{ width: 80 }}
                     size='small'
                     onChange={handleBaudRateChange}
                     options={[
@@ -100,7 +98,7 @@ export const Connect = () => {
                         { value: '57600', label: '57600' },
                         { value: '115200', label: '115200' },
                     ]}
-                />
+                /> bps
             </Space>
         </Space>
     )
