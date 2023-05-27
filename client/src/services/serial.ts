@@ -7,8 +7,9 @@ export class Port {
     private line: Uint8Array;
     private buffer: Uint8Array;
     private deserialisedData: string[] = [];
+    private onDataReceived: (data: string) => void;
 
-    constructor(baudRate: number, lineSeperator: string = '\n') {
+    constructor(baudRate: number, lineSeperator: string = '\n', onDataReceived: (data: string) => void) {
         this.port = undefined!;
         this.inputStream = undefined!;
         this.reader = undefined!;
@@ -16,7 +17,8 @@ export class Port {
         this.lineSeperator = lineSeperator;
         this.line = new Uint8Array();
         this.buffer = new Uint8Array();
-        this.deserialisedData = undefined!;
+        this.deserialisedData = [];
+        this.onDataReceived = onDataReceived;
     }
 
     public async connect() {
@@ -104,8 +106,9 @@ export class Port {
             // decode buffer into a string
             const decoder = new TextDecoder();
             const string = decoder.decode(this.buffer);
-            console.log(string)
+
             this.deserialisedData.push(string);
+            this.onDataReceived(string);
         }
     }
 
@@ -115,7 +118,6 @@ export class Port {
                 port: this.port.getInfo(),
                 baudRate: this.baudRate,
                 lineSeperator: this.lineSeperator,
-                data: this.buffer,
                 info: this.port.getInfo()
             };
         }
