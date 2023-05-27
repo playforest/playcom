@@ -18,7 +18,7 @@ interface SerialPortState {
 const initialState = {
     isConnected: false,
     port: null,
-    baudRate: null,
+    baudRate: 9600,
     data: [] as string[],
     bufferSize: null,
     lineSeperator: '\n',
@@ -48,7 +48,6 @@ const serialPortSlice = createSlice({
             state.bufferSize = payload;
         },
         pushData: (state, { payload }: { payload: string }) => {
-            console.log('pushData: ')
             console.log(payload)
             state.data.push(payload);
         }

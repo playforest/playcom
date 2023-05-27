@@ -1,3 +1,8 @@
+interface DataItem {
+    timestamp: number;
+    data: string;
+}
+
 export class Port {
     private port: SerialPort;
     private inputStream: ReadableStream<string>;
@@ -7,9 +12,9 @@ export class Port {
     private line: Uint8Array;
     private buffer: Uint8Array;
     private deserialisedData: string[] = [];
-    private onDataReceived: (data: string) => void;
+    private onDataReceived: (data: DataItem) => void;
 
-    constructor(baudRate: number, lineSeperator: string = '\n', onDataReceived: (data: string) => void) {
+    constructor(baudRate: number, lineSeperator: string = '\n', onDataReceived: (data: DataItem) => void) {
         this.port = undefined!;
         this.inputStream = undefined!;
         this.reader = undefined!;
@@ -80,10 +85,8 @@ export class Port {
 
     private storeDeserialisedData(chunk: Uint8Array) {
         const asciiDelimiter: number = this.lineSeperator.charCodeAt(0);
-        const delimiterIndex = chunk.indexOf(asciiDelimiter);
+        const delimiterIndex: number = chunk.indexOf(asciiDelimiter);
         const chunkContainsDelimiter: boolean = delimiterIndex === -1 ? false : true;
-        // console.log('chunkContainsDelimiter: ', chunkContainsDelimiter)
-
 
         if (!chunkContainsDelimiter) {
             this.buffer = new Uint8Array(this.line.length + chunk.length);
@@ -108,7 +111,7 @@ export class Port {
             const string = decoder.decode(this.buffer);
 
             this.deserialisedData.push(string);
-            this.onDataReceived(string);
+            this.onDataReceived({ timestamp: Date.now(), data: string });
         }
     }
 
