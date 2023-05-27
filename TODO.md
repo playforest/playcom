@@ -6,7 +6,7 @@
 - [ ] setup redux states
     - [*] serial port slice
     - [*] serial data state
-    - [ ] display timestamp
+    - [*] include timestamp
 
 ## Client (Services)
 - [*] Retrieve connected ports
