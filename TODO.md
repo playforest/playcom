@@ -3,10 +3,13 @@
 ## Client (React)
 - [ ] display connected ports
 - [ ] close port button
-- [ ] setup redux states
+- [*] setup redux states
     - [*] serial port slice
     - [*] serial data state
     - [*] include timestamp
+- [ ] console
+    - [ ] display line
+    - [ ] toggle timestamp
 
 ## Client (Services)
 - [*] Retrieve connected ports
