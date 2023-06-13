@@ -7,9 +7,10 @@
     - [*] serial port slice
     - [*] serial data state
     - [*] include timestamp
-- [ ] console
-    - [ ] display line
+- [*] console
+    - [*] display line
     - [ ] toggle timestamp
+    - [ ] apply virtual windowing for performance
 
 ## Client (Services)
 - [*] Retrieve connected ports
