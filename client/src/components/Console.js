@@ -11,14 +11,27 @@ const label = 'Console';
 export const Console = () => {
     const data = useSelector((state) => state.serialPort.data);
     const listRef = useRef(null);
+    let autoscroll;
+    let lastVisibleItemIndex = 0;
 
     const getItemSize = (index) => {
         return 12;
     }
 
     useEffect(() => {
-        listRef.current?.scrollToItem(data.length - 1);
+        console.log(listRef.current?.scrollTop)
+        if (autoscroll)
+            listRef.current?.scrollToItem(data.length - 1);
     }, [data]);
+
+    const handleItemsRendered = ({ visibleStartIndex, visibleStopIndex }) => {
+        const autoscrollBuffer = 10;
+        if (visibleStopIndex < (data.length - autoscrollBuffer)) {
+            autoscroll = false
+        } else {
+            autoscroll = true;
+        }
+    }
 
     const Row = ({ index, style, data }) => (
         <div style={style}>
@@ -48,6 +61,7 @@ export const Console = () => {
                 itemSize={getItemSize}
                 width={'100%'}
                 itemData={data}
+                onItemsRendered={handleItemsRendered}
             >
                 {Row}
             </List>
