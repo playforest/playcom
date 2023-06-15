@@ -11,8 +11,10 @@
     - [*] display line
     - [ ] toggle timestamp
     - [*] apply virtual windowing for performance
-    - [ ] auto scroll checkox
-        - [*] if auto-scroll: gracefully turn off once user scrolls upwords, and switch back onn when user is at bottom of list
+    - [*] auto scroll checkox
+        - [*] if auto-scroll: gracefully turn off once user scrolls upwords
+            - [ ] store user scroll state globally in redux
+    - [ ] clear / reset view
 
 ## Client (Services)
 - [*] Retrieve connected ports
