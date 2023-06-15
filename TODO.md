@@ -10,7 +10,9 @@
 - [*] console
     - [*] display line
     - [ ] toggle timestamp
-    - [ ] apply virtual windowing for performance
+    - [*] apply virtual windowing for performance
+    - [ ] auto scroll checkox
+        - [*] if auto-scroll: gracefully turn off once user scrolls upwords, and switch back onn when user is at bottom of list
 
 ## Client (Services)
 - [*] Retrieve connected ports
