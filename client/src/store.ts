@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import serialPortReducer from './features/serialData/serialPortSlice'
+import consoleReducer from './features/console/consoleSlice'
 
 export const store = configureStore({
     reducer: {
-        serialPort: serialPortReducer
+        serialPort: serialPortReducer,
         // serialData: serialDataReducer,
-        // console: consoleReducer,
+        console: consoleReducer
         // chart: chartReducer
     }
 })
