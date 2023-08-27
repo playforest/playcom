@@ -13,8 +13,14 @@
     - [*] apply virtual windowing for performance
     - [*] auto scroll checkox
         - [*] if auto-scroll: gracefully turn off once user scrolls upwords
-            - [ ] store user scroll state globally in redux
+            - [*] store user scroll state globally in redux
     - [ ] clear / reset view
+- [ ] plot
+    - [ ] display line chart and track dummy data
+    - [ ] update data / legend with parsing settings
+    - [ ] set visible context (t-N)
+    - [ ] inherit line colors from plot settings
+
 
 ## Client (Services)
 - [*] Retrieve connected ports
