@@ -7,6 +7,7 @@
     - [*] serial port slice
     - [*] serial data state
     - [*] include timestamp
+    - [ ] parser
 - [*] console
     - [*] display line
     - [ ] toggle timestamp
