@@ -8,6 +8,9 @@
     - [*] serial data state
     - [*] include timestamp
     - [ ] parser
+        - [ ] line seperators
+        - [ ] basic comma seperated values
+        - [ ] leading metric name version
 - [*] console
     - [*] display line
     - [ ] toggle timestamp
